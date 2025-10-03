@@ -2,7 +2,7 @@
 
 This repository hosts my personal website, where I document projects and explorations in **analog circuit design**, **optimization techniques**, and related areas.
 
-The site is live here: [View Website](https://your-username.github.io/your-repo-name)
+The site is live here: [View Website](https://dank0v.github.io/Dankov.github.io/)
 
 ---
 
