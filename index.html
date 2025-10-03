@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: #d6cdb7;
+            color: #4a4742;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle scanlines effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '[ AAAAAAAAAAAAAA ]';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            letter-spacing: 3px;
+            color: #8b7d6b;
+            opacity: 0.6;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: #3d3832;
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: #4a4742;
+        }
+        
+        .hero p {
+            font-size: 0.9em;
+            color: #6b6158;
+            letter-spacing: 2px;
+            margin-top: 25px;
+            font-weight: 300;
+        }
+        
+        .contacts {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .contact-link {
+            background: rgba(255, 255, 255, 0.3);
+            color: #3d3832;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 1px solid #4a4742;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(61, 56, 50, 0.1);
+            transition: left 0.3s ease;
+        }
+        
+        .contact-link:hover::before {
+            left: 0;
+        }
+        
+        .contact-link:hover {
+            color: #1a1712;
+            border-color: #1a1712;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid #4a4742;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #3d3832;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #4a4742;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #3d3832;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .card p {
+            color: #6b6158;
+            line-height: 1.8;
+            font-size: 0.85em;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            opacity: 0.7;
+            filter: grayscale(50%);
+        }
+        
+        /* Terminal-style decoration */
+        .terminal-line {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 0.7em;
+            color: #8b7d6b;
+            letter-spacing: 1px;
+            font-weight: 300;
+            opacity: 0.5;
+        }
+        
+        .version {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 0.7em;
+            color: #8b7d6b;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="version">v.2.0.4.7</div>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Dankov's Bunker</h1>
+            <p>HUH</p>
+            
+            <div class="contacts">
+                <a href="https://www.youtube.com/@Dankov1" class="contact-link">[ YOUTUBE ]</a>
+                <a href="https://github.com/Dank0v" class="contact-link">[ GITHUB ]</a>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <a href="notebooks.html" class="card">
+                <div class="icon">⚡</div>
+                <h2>"Lessons"</h2>
+                <p>Electronic "lessons".</p>
+            </a>
+            
+            <a href="#" class="card">
+                <div class="icon">🫟</div>
+                <h2>GOON CORNER</h2>
+                <p>Whatever happens in the GOON CORNER stays in the GOON CORNER.</p>
+            </a>
+            
+            <a href="#" class="card">
+                <div class="icon">🚱</div>
+                <h2>LOCK IN</h2>
+                <p>...</p>
+            </a>
+            
+            <a href="#" class="card">
+                <div class="icon">😫</div>
+                <h2>EDGE CORNER</h2>
+                <p>Edge. Edge. Have you ever been on an edging streak? Edge. Edge. Do they keep you in a state of edging? Edge. Edge. When you’re not performing your edging do they make you goon? Edge. Edge. Rizz. Rizz. Do they teach you how to feel sigma to sigma? Rizz. Rizz. Baby Gronk rizzed up Livvy Dunne.</p>
+            </a>
+        </div>
+    </div>
+    
+    <div class="terminal-line">&gt; SYSTEM_ONLINE</div>
+</body>
+</html>

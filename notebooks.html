@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notebooks - Your Name</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: #d6cdb7;
+            color: #4a4742;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .header {
+            background: rgba(61, 56, 50, 0.1);
+            border-bottom: 1px solid #4a4742;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '[ JUPYTER_NOTEBOOKS ]';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            letter-spacing: 3px;
+            color: #8b7d6b;
+            opacity: 0.6;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            letter-spacing: 6px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+        
+        .header p {
+            color: #6b6158;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #3d3832;
+            text-decoration: none;
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid #4a4742;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .back-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(61, 56, 50, 0.1);
+            transition: left 0.3s ease;
+        }
+        
+        .back-link:hover::before {
+            left: 0;
+        }
+        
+        .back-link:hover {
+            border-color: #1a1712;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+        
+        .overview-section {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid #4a4742;
+            padding: 40px;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .overview-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: #4a4742;
+        }
+        
+        .overview-section h2 {
+            color: #3d3832;
+            font-size: 1.1em;
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .overview-section p {
+            color: #6b6158;
+            line-height: 1.9;
+            font-size: 0.9em;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        .notebooks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .notebook-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid #4a4742;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .notebook-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #4a4742;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .notebook-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .notebook-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .notebook-card h3 {
+            color: #3d3832;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .notebook-card p {
+            color: #6b6158;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 0.85em;
+            font-weight: 300;
+        }
+        
+        .notebook-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .tag {
+            background: rgba(61, 56, 50, 0.1);
+            color: #4a4742;
+            padding: 5px 15px;
+            border: 1px solid #8b7d6b;
+            font-size: 0.75em;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+        
+        .view-button {
+            display: inline-block;
+            background: rgba(61, 56, 50, 0.15);
+            color: #3d3832;
+            padding: 12px 30px;
+            text-decoration: none;
+            border: 1px solid #4a4742;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .view-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(61, 56, 50, 0.1);
+            transition: left 0.3s ease;
+        }
+        
+        .view-button:hover::before {
+            left: 0;
+        }
+        
+        .view-button:hover {
+            border-color: #1a1712;
+        }
+        
+        .version {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 0.7em;
+            color: #8b7d6b;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
+        
+        .terminal-line {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 0.7em;
+            color: #8b7d6b;
+            letter-spacing: 1px;
+            font-weight: 300;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="version">v.2.0.4.7</div>
+    
+    <div class="header">
+        <h1>"Lessons"</h1>
+        <p>CIRCUIT DESIGN / OPTIMIZATION / PYTHON</p>
+        <a href="index.html" class="back-link">[ RETURN ]</a>
+    </div>
+    
+    <div class="container">
+        
+        <div class="overview-section">
+            <h2>[ OVERVIEW ]</h2>
+            <p>This section contains Jupyter notebooks documenting my work in analog circuit design and optimization. Each notebook demonstrates practical implementations using Python and the gm/ID design methodology for systematic transistor sizing and optimization.</p>
+        </div>
+        
+        <div class="notebooks-grid">
+            
+            <div class="notebook-card">
+                <h3>Common Source</h3>
+                <p>Exploratory analysis of sales data with statistical visualizations and pattern recognition algorithms.</p>
+                <div class="tags">
+                    <span class="tag">PYGMID</span>
+                </div>
+                <a href="notebooks/cs.html" class="view-button">[ ACCESS ]</a>
+            </div>
+            
+            <div class="notebook-card">
+                <h3>5T-OTA</h3>
+                <p>Classification model construction and evaluation using supervised learning methodologies.</p>
+                <div class="tags">
+                    <span class="tag">PYGMID</span>
+                </div>
+                <a href="notebooks/ota.html" class="view-button">[ ACCESS ]</a>
+            </div>
+            
+            <div class="notebook-card">
+                <h3>Miller Amplifier</h3>
+                <p>Temporal data analysis and forecasting implementation through statistical methods.</p>
+                <div class="tags">
+                    <span class="tag">PYGMID</span>
+                </div>
+                <a href="notebooks/miller.html" class="view-button">[ ACCESS ]</a>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="terminal-line">&gt; ARCHIVE_ACCESSED</div>
+</body>
+</html>
